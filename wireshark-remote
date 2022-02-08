@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ "$1" == "-h" ]; then
+  echo "Simple script to run wireshark capture on remote server."
+  echo ""
+  echo "Usage:"
+  echo "  `basename $0` [remote user]@[remote ip] [interface on remote machine]"
+  echo ""
+  echo "Options:"
+  echo "  -h	show help"
+  echo ""
+  exit 0
+fi
+
+echo "Running Wireshark remotely from "$1" on interface "$2;
+
+FILE=/tmp/remote
+if [ -p $FILE ]; then
+    echo "$FILE exists."
+else
+   echo "Pipe not exist, creating $FILE."
+   mkfifo /tmp/remote
+fi
+
+ssh $1 "tcpdump -s 0 -U -n -w - -i $2 not port 22" > /tmp/remote &
+
+wireshark -k -i /tmp/remote
