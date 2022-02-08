@@ -9,7 +9,9 @@
 
 ## Installation
     wget https://raw.githubusercontent.com/drushadrusha/wireshark-remote/main/wireshark-remote
-	chmod +x wireshark-remote
+    chmod +x wireshark-remote
+    sudo mv wireshark-remote /usr/bin/
+    wireshark-remote -h
 
 ## Requirements
 - Wireshark, obiviously.
